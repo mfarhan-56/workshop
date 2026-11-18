@@ -73,6 +73,18 @@ def get_event(event_id):
     return jsonify(response.data[0])
 
 
+@app.get("/api/users")
+def list_users():
+    """List available demo accounts for the frontend account picker."""
+    response = (
+        supabase.table("users")
+        .select("id, email")
+        .order("email")
+        .execute()
+    )
+    return jsonify(response.data)
+
+
 @app.post("/api/registrations")
 def create_registration():
     """Register a user for an event; duplicate registrations return 409."""
